@@ -5,7 +5,7 @@ import time
 
 def deploy_lottery():
     account = get_account()
-    Lottery.deploy(
+    lottery = Lottery.deploy(
         get_contract("eth_usd_price_feed").address,
         get_contract("vrf_coordinator").address,
         get_contract("link_token").address,
@@ -15,6 +15,7 @@ def deploy_lottery():
         publish_source=config["networks"][network.show_active()].get("verify", False),
     )
     print("--> Lottery contract successfully deployed!\n")
+    return lottery
 
 
 def start_lottery():
@@ -41,9 +42,10 @@ def end_lottery():
     tx.wait(1)
     ending_transaction = lottery.endLottery({"from": account})
     ending_transaction.wait(1)
-    #  wait for Chanilink node to respond with return from fulfillRandomness()
+    #  wait for Chainlink node to respond with return from fulfillRandomness()
     time.sleep(60)
     print(f"The lottery winner is: {lottery.recentWinner()}!\n")
+    return lottery
 
 
 def main():
@@ -51,3 +53,6 @@ def main():
     start_lottery()
     enter_lottery()
     end_lottery()
+
+
+# start from 7:48:20
