@@ -79,7 +79,7 @@ def test_can_pick_winner_correctly():
     transaction = lottery.endLottery({"from": account})
     request_id = transaction.events["RequestedRandomness"]["requestId"]
 
-    # --> now dummy getting a response back from a Chainlink node
+    # -->  simulate a dummy response back from Chainlink node
     STATIC_RNG = 779
     get_contract("vrf_coordinator").callBackWithRandomness(
         request_id, STATIC_RNG, lottery.address, {"from": account}
@@ -91,6 +91,3 @@ def test_can_pick_winner_correctly():
     assert lottery.recentWinner() == get_account(index=2)
     assert lottery.balance() == 0
     assert account.balance() == starting_balance_of_account + balance_of_lottery
-
-
-""" Final integration test  -->  8:10:57 """
