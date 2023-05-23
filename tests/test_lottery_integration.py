@@ -29,5 +29,3 @@ def test_can_pick_winner():
     # assert lottery.recentWinner() == account
     # assert lottery.balance() == 0
     lottery.endLottery({"from": account})
-    # gas_limit = 2000000
-    # lottery.endLottery({"from": account, "gasLimit": gas_limit})

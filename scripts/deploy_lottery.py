@@ -34,15 +34,18 @@ def enter_lottery():
 
 
 def end_lottery():
+    print("-->  end_lottery function called")
     account = get_account()
     lottery = Lottery[-1]
     # fund contract with LINK tokens first
     # -> then end the lottery
     tx = fund_with_link(lottery.address)
     tx.wait(1)
+
     ending_transaction = lottery.endLottery({"from": account})
+
     ending_transaction.wait(1)
-    #  wait for Chainlink node to respond with return from fulfillRandomness()
+
     time.sleep(60)
     print(f"The lottery winner is: {lottery.recentWinner()}!\n")
     return lottery
@@ -53,6 +56,3 @@ def main():
     start_lottery()
     enter_lottery()
     end_lottery()
-
-
-# start from 7:48:20
